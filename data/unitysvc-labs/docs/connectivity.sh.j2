@@ -1,0 +1,10 @@
+#!/bin/bash
+# Test HTTP relay connectivity
+{% if local_testing %}
+# Local testing: BASE_URL from upstream_access_config
+BASE_URL=${HTTP_RELAY_BASE_URL:-http://localhost:8080}
+{% else %}
+# Gateway testing: use SERVICE_BASE_URL
+BASE_URL=${SERVICE_BASE_URL}
+{% endif %}
+curl -sf --max-time 5 "${BASE_URL}" -o /dev/null && echo "connectivity ok"

@@ -1,0 +1,68 @@
+{
+  "currency": "USD",
+  "display_name": "HTTP Relay (Multi-Enrollment)",
+  "documents": {
+    "Connectivity test": {
+      "category": "connectivity_test",
+      "description": "Verify HTTP relay endpoint is reachable",
+      "file_path": "../../docs/connectivity.sh.j2",
+      "is_active": true,
+      "is_public": false,
+      "mime_type": "bash"
+    },
+    "How to use this service": {
+      "category": "getting_started",
+      "description": "Guide to setting up multiple HTTP relay enrollments",
+      "file_path": "../../docs/relay-description.md",
+      "is_active": true,
+      "is_public": true,
+      "mime_type": "markdown"
+    },
+    "Python code example": {
+      "category": "code_example",
+      "description": "Example code to send requests via HTTP relay",
+      "file_path": "../../docs/code-example.py.j2",
+      "is_active": true,
+      "is_public": true,
+      "mime_type": "python"
+    }
+  },
+  "list_price": {
+    "description": "$0.001 per request relayed",
+    "price": "0.001",
+    "type": "constant"
+  },
+  "schema": "listing_v1",
+  "service_options": {
+    "ops_testing_parameters": {
+      "base_url_secret": "HTTP_RELAY_BASE_URL",
+      "api_key_secret": ""
+    }
+  },
+  "status": "ready",
+  "time_created": "2026-04-07T00:00:00Z",
+  "user_access_interfaces": {
+    "HTTP Gateway": {
+      "access_method": "http",
+      "base_url": "${HTTP_GATEWAY_BASE_URL}",
+      "routing_key": {
+        "username": "{{ enrollment_vars.code }}"
+      }
+    }
+  },
+  "user_parameters_schema": {
+    "type": "object",
+    "properties": {
+      "base_url_secret": {
+        "type": "string",
+        "description": "Name of the customer secret containing the upstream base URL"
+      },
+      "api_key_secret": {
+        "type": "string",
+        "default": "",
+        "description": "Name of the customer secret containing the API key (leave empty if no auth)"
+      }
+    },
+    "required": ["base_url_secret"]
+  }
+}

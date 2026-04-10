@@ -1,0 +1,53 @@
+{
+  "currency": "USD",
+  "display_name": "HTTP Relay (Bring Your Own Endpoint)",
+  "documents": {
+    "Connectivity test": {
+      "category": "connectivity_test",
+      "description": "Verify HTTP relay endpoint is reachable",
+      "file_path": "../../docs/connectivity.sh.j2",
+      "is_active": true,
+      "is_public": false,
+      "mime_type": "bash"
+    },
+    "How to use this service": {
+      "category": "getting_started",
+      "description": "Guide to configuring your own HTTP endpoint for relay",
+      "file_path": "../../docs/byok-description.md",
+      "is_active": true,
+      "is_public": true,
+      "mime_type": "markdown"
+    },
+    "Python code example": {
+      "category": "code_example",
+      "description": "Example code to send requests via HTTP relay",
+      "file_path": "../../docs/code-example.py.j2",
+      "is_active": true,
+      "is_public": true,
+      "mime_type": "python"
+    }
+  },
+  "list_price": {
+    "description": "Free — customer provides own endpoint",
+    "price": "0",
+    "type": "constant"
+  },
+  "schema": "listing_v1",
+  "service_options": {
+    "enrollment_vars": {
+      "HTTP_RELAY_BASE_URL": "",
+      "HTTP_RELAY_API_KEY": ""
+    }
+  },
+  "status": "ready",
+  "time_created": "2026-04-07T00:00:00Z",
+  "user_access_interfaces": {
+    "HTTP Gateway": {
+      "access_method": "http",
+      "base_url": "${HTTP_GATEWAY_BASE_URL}",
+      "routing_key": {
+        "username": "http-relay"
+      }
+    }
+  }
+}

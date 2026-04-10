@@ -1,0 +1,27 @@
+{
+  "capabilities": [
+    "http_relay"
+  ],
+  "description": "Multi-enrollment HTTP relay. Each enrollment connects to a different upstream HTTP endpoint. Customers provide secret names as parameters, enabling multiple relay configurations under a single account.",
+  "name": "http-relay-multi",
+  "payout_price": {
+    "description": "No platform commission — customer uses own endpoint",
+    "percentage": "100.00",
+    "type": "revenue_share"
+  },
+  "schema": "offering_v1",
+  "service_type": "misc",
+  "status": "ready",
+  "tags": [
+    "byoe",
+    "gateway"
+  ],
+  "time_created": "2026-04-07T00:00:00Z",
+  "upstream_access_config": {
+    "HTTP Relay": {
+      "access_method": "http",
+      "api_key": "{% if params.api_key_secret %}${ customer_secrets.{{ params.api_key_secret }} }{% else %}{% endif %}",
+      "base_url": "${ customer_secrets.{{ params.base_url_secret }} }"
+    }
+  }
+}
