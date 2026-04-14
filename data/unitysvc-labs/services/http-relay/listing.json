@@ -8,6 +8,9 @@
       "file_path": "../../docs/connectivity.sh.j2",
       "is_active": true,
       "is_public": false,
+      "meta": {
+        "output_contains": "connectivity ok"
+      },
       "mime_type": "bash"
     },
     "How to use this service": {
@@ -24,6 +27,9 @@
       "file_path": "../../docs/code-example.py.j2",
       "is_active": true,
       "is_public": true,
+      "meta": {
+        "output_contains": "connectivity ok"
+      },
       "mime_type": "python"
     }
   },
@@ -37,6 +43,10 @@
     "enrollment_vars": {
       "HTTP_RELAY_BASE_URL": "",
       "HTTP_RELAY_API_KEY": ""
+    },
+    "ops_testing_parameters": {
+      "base_url": "https://echo.staging.svcmarket.com",
+      "api_key": ""
     }
   },
   "status": "ready",
