@@ -40,13 +40,8 @@
   },
   "schema": "listing_v1",
   "service_options": {
-    "enrollment_vars": {
-      "HTTP_RELAY_BASE_URL": "",
-      "HTTP_RELAY_API_KEY": ""
-    },
     "ops_testing_parameters": {
-      "base_url": "https://echo.staging.svcmarket.com",
-      "api_key": ""
+      "base_url": "https://echo.staging.svcmarket.com"
     }
   },
   "status": "ready",
@@ -54,7 +49,7 @@
   "user_access_interfaces": {
     "HTTP Gateway": {
       "access_method": "http",
-      "base_url": "${HTTP_GATEWAY_BASE_URL}",
+      "base_url": "https://api.staging.svcpass.com/",
       "routing_key": {
         "username": "http-relay"
       }

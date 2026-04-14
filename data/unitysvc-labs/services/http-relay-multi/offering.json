@@ -10,7 +10,7 @@
     "type": "revenue_share"
   },
   "schema": "offering_v1",
-  "service_type": "misc",
+  "service_type": "compute",
   "status": "ready",
   "tags": [
     "byoe",
