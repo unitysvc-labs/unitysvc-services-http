@@ -20,8 +20,8 @@
   "upstream_access_config": {
     "HTTP Relay": {
       "access_method": "http",
-      "api_key": "{% if params.api_key_secret %}${ customer_secrets.{{ params.api_key_secret }} }{% else %}{% endif %}",
-      "base_url": "${ customer_secrets.{{ params.base_url_secret }} }"
+      "api_key": "${ customer_secrets[enrollment_params.api_key_secret] }",
+      "base_url": "${ customer_secrets[enrollment_params.base_url_secret] }"
     }
   }
 }
