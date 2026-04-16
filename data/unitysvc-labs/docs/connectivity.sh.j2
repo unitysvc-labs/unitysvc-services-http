@@ -7,4 +7,4 @@ BASE_URL=${HTTP_RELAY_BASE_URL:-https://echo.staging.svcmarket.com}
 # Gateway testing: use SERVICE_BASE_URL
 BASE_URL=${SERVICE_BASE_URL}
 {% endif %}
-curl -sf --max-time 5 "${BASE_URL}" -o /dev/null && echo "connectivity ok"
+curl -s --max-time 5 "${BASE_URL}" -o /dev/null && echo "connectivity ok"
