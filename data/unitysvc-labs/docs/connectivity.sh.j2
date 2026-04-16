@@ -5,8 +5,9 @@ BASE_URL=https://echo.staging.svcmarket.com
 {% else %}
 BASE_URL=${SERVICE_BASE_URL}
 {% endif %}
-# Fall back to echo endpoint if BASE_URL has no path (unresolved enrollment code)
-if [[ -z "${BASE_URL}" ]] || [[ "${BASE_URL%/}" =~ ^https?://[^/]+$ ]]; then
+# Fall back to echo endpoint if BASE_URL is empty, has no path, or contains
+# unrendered template syntax (e.g. enrollment_vars.code not resolved)
+if [[ -z "${BASE_URL}" ]] || [[ "${BASE_URL%/}" =~ ^https?://[^/]+$ ]] || [[ "${BASE_URL}" == *"{"* ]]; then
     BASE_URL=https://echo.staging.svcmarket.com
 fi
 http_code=$(curl -s --max-time 5 -o /dev/null -w "%{http_code}" "${BASE_URL}")
