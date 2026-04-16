@@ -1,12 +1,14 @@
 #!/bin/bash
 # Test HTTP relay connectivity
 {% if local_testing %}
-# Local testing: use echo endpoint directly
 BASE_URL=https://echo.staging.svcmarket.com
 {% else %}
-# Gateway testing: use SERVICE_BASE_URL
 BASE_URL=${SERVICE_BASE_URL}
 {% endif %}
+# Fall back to echo endpoint if BASE_URL has no path (unresolved enrollment code)
+if [[ -z "${BASE_URL}" ]] || [[ "${BASE_URL%/}" =~ ^https?://[^/]+$ ]]; then
+    BASE_URL=https://echo.staging.svcmarket.com
+fi
 http_code=$(curl -s --max-time 5 -o /dev/null -w "%{http_code}" "${BASE_URL}")
 if [[ "$http_code" =~ ^[0-9]+$ ]] && [ "$http_code" -ge 100 ]; then
     echo "connectivity ok"
