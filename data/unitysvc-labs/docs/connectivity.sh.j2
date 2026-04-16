@@ -2,9 +2,12 @@
 # Test HTTP relay connectivity
 {% if local_testing %}
 # Local testing: BASE_URL from upstream_access_config
-BASE_URL=${HTTP_RELAY_BASE_URL:-https://echo.staging.svcmarket.com}
+BASE_URL=${HTTP_RELAY_BASE_URL:-https://api.staging.svcpass.com/}
 {% else %}
 # Gateway testing: use SERVICE_BASE_URL
 BASE_URL=${SERVICE_BASE_URL}
 {% endif %}
-curl -s --max-time 5 "${BASE_URL}" -o /dev/null && echo "connectivity ok"
+http_code=$(curl -s --max-time 5 -o /dev/null -w "%{http_code}" "${BASE_URL}")
+if [[ "$http_code" =~ ^[0-9]+$ ]] && [ "$http_code" -ge 100 ]; then
+    echo "connectivity ok"
+fi
