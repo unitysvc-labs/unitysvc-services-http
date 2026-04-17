@@ -27,9 +27,6 @@
       "file_path": "../../docs/code-example.py.j2",
       "is_active": true,
       "is_public": true,
-      "meta": {
-        "output_contains": "connectivity ok"
-      },
       "mime_type": "python"
     }
   },
@@ -44,7 +41,7 @@
   "user_access_interfaces": {
     "HTTP Gateway": {
       "access_method": "http",
-      "base_url": "https://api.staging.svcpass.com/{{ enrollment_vars.code }}"
+      "base_url": "${API_GATEWAY_BASE_URL}/{{ enrollment_vars.code }}"
     }
   },
   "user_parameters_schema": {

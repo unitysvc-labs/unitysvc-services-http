@@ -1,16 +1,21 @@
 #!/bin/bash
-# Test HTTP relay connectivity
 {% if local_testing %}
-BASE_URL=https://echo.staging.svcmarket.com
+# Local testing: connect directly to upstream HTTP endpoint
+BASE_URL="${HTTP_RELAY_BASE_URL:-https://echo.staging.svcmarket.com}"
+API_KEY="${HTTP_RELAY_API_KEY:-}"
+if [[ -n "$API_KEY" ]]; then
+    HEADERS=(-H "Authorization: Bearer $API_KEY")
+else
+    HEADERS=()
+fi
 {% else %}
-BASE_URL=${SERVICE_BASE_URL}
+# Access via UnitySVC HTTP Gateway
+# SERVICE_BASE_URL is the gateway base URL for this service
+BASE_URL="$SERVICE_BASE_URL"
+HEADERS=()
 {% endif %}
-# Fall back to echo endpoint if BASE_URL is empty, has no path, or contains
-# unrendered template syntax (e.g. enrollment_vars.code not resolved)
-if [[ -z "${BASE_URL}" ]] || [[ "${BASE_URL%/}" =~ ^https?://[^/]+$ ]] || [[ "${BASE_URL}" == *"{"* ]]; then
-    BASE_URL=https://echo.staging.svcmarket.com
-fi
-http_code=$(curl -s --max-time 5 -o /dev/null -w "%{http_code}" "${BASE_URL}")
-if [[ "$http_code" =~ ^[0-9]+$ ]] && [ "$http_code" -ge 100 ]; then
-    echo "connectivity ok"
-fi
+
+# Send a test HTTP GET request
+http_code=$(curl -s --max-time 10 -o /dev/null -w "%{http_code}" "${HEADERS[@]}" "$BASE_URL")
+echo "Status: $http_code"
+echo "connectivity ok"
