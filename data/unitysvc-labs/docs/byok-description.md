@@ -2,6 +2,22 @@
 
 Route HTTP requests through the UnitySVC gateway using your own upstream HTTP endpoint and optional API key.
 
+### Request Flow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as User / Client
+    participant G as UnitySVC Gateway
+    participant E as Your Upstream<br/>(HTTP_RELAY_BASE_URL)
+
+    U->>G: HTTP request<br/>Authorization: svcpass-xxx
+    Note over G: Authenticate svcpass key<br/>Resolve enrollment secrets
+    G->>E: Forwarded request<br/>Authorization: HTTP_RELAY_API_KEY
+    E-->>G: Response
+    G-->>U: Response
+```
+
 ### Setup
 
 1. **Enroll** in this service on the UnitySVC platform
