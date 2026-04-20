@@ -18,4 +18,8 @@ HEADERS=()
 # Send a test HTTP GET request
 http_code=$(curl -s --max-time 10 -o /dev/null -w "%{http_code}" "${HEADERS[@]}" "$BASE_URL")
 echo "Status: $http_code"
+if [[ "$http_code" != "200" ]]; then
+    echo "connectivity failed"
+    exit 1
+fi
 echo "connectivity ok"
