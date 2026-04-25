@@ -39,7 +39,7 @@
   "status": "ready",
   "time_created": "2026-04-07T00:00:00Z",
   "user_access_interfaces": {
-    "HTTP Gateway": {
+    "http_gateway": {
       "access_method": "http",
       "base_url": "${API_GATEWAY_BASE_URL}/{{ enrollment_vars.code }}"
     }
@@ -57,6 +57,8 @@
         "description": "Name of the customer secret containing the API key (leave empty if no auth)"
       }
     },
-    "required": ["base_url_secret"]
+    "required": [
+      "base_url_secret"
+    ]
   }
 }
