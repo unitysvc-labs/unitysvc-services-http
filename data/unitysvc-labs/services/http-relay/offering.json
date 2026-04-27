@@ -10,7 +10,7 @@
     "type": "revenue_share"
   },
   "schema": "offering_v1",
-  "service_type": "compute",
+  "service_type": "proxy",
   "status": "ready",
   "tags": [
     "byoe",
