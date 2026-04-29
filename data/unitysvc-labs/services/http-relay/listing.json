@@ -23,6 +23,12 @@
     "type": "constant"
   },
   "schema": "listing_v1",
+  "service_options": {
+    "ops_testing_parameters": {
+      "api_key_secret": "HTTP_RELAY_API_KEY",
+      "base_url_secret": "HTTP_RELAY_BASE_URL"
+    }
+  },
   "status": "ready",
   "time_created": "2026-04-07T00:00:00Z",
   "user_access_interfaces": {
