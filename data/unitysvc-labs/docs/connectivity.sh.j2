@@ -11,7 +11,7 @@ fi
 {% else %}
 # Access via UnitySVC HTTP Gateway
 # SERVICE_BASE_URL is the gateway base URL for this service
-BASE_URL="$SERVICE_BASE_URL"
+BASE_URL="{{ service_base_url }}"
 HEADERS=()
 {% endif %}
 

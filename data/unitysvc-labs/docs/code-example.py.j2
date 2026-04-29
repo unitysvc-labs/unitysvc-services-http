@@ -10,7 +10,7 @@ headers = {'Authorization': f'Bearer {api_key}'} if api_key else {}
 {% else %}
 # Access via UnitySVC HTTP Gateway
 # SERVICE_BASE_URL is the gateway base URL for this service
-base_url = os.environ['SERVICE_BASE_URL']
+base_url = "{{ service_base_url }}"
 auth = None
 headers = {}
 {% endif %}
