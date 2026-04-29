@@ -3,15 +3,7 @@
   "display_name": "HTTP Relay (Bring Your Own Endpoint)",
   "documents": {
     "Connectivity test": {
-      "category": "connectivity_test",
-      "description": "Verify HTTP relay endpoint is reachable",
-      "file_path": "../../docs/connectivity.sh.j2",
-      "is_active": true,
-      "is_public": false,
-      "meta": {
-        "output_contains": "connectivity ok"
-      },
-      "mime_type": "bash"
+      "$doc_preset": "http_relay_connectivity"
     },
     "How to use this service": {
       "category": "getting_started",
@@ -22,12 +14,7 @@
       "mime_type": "markdown"
     },
     "Python code example": {
-      "category": "code_example",
-      "description": "Example code to send requests via HTTP relay",
-      "file_path": "../../docs/code-example.py.j2",
-      "is_active": true,
-      "is_public": true,
-      "mime_type": "python"
+      "$doc_preset": "http_relay_code_example"
     }
   },
   "list_price": {
