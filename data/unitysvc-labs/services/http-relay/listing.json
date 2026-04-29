@@ -3,7 +3,7 @@
   "display_name": "HTTP Relay (Bring Your Own Endpoint)",
   "documents": {
     "Connectivity test": {
-      "$doc_preset": "http_relay_connectivity"
+      "$doc_preset": "api_connectivity"
     },
     "How to use this service": {
       "category": "getting_started",
@@ -14,7 +14,7 @@
       "mime_type": "markdown"
     },
     "Python code example": {
-      "$doc_preset": "http_relay_code_example"
+      "$doc_preset": "llm_code_example_requests"
     }
   },
   "list_price": {
