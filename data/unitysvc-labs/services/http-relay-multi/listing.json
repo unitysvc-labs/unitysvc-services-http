@@ -27,6 +27,9 @@
   },
   "schema": "listing_v1",
   "service_options": {
+    "enrollment_vars": {
+      "code": "{{ enrollment_code(6) }}"
+    },
     "ops_testing_parameters": {
       "api_key_secret": "HTTP_RELAY_API_KEY",
       "base_url_secret": "HTTP_RELAY_BASE_URL"
