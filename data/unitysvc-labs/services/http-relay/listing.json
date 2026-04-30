@@ -8,13 +8,16 @@
     "How to use this service": {
       "category": "getting_started",
       "description": "Guide to configuring your own HTTP endpoint for relay",
-      "file_path": "../../docs/byok-description.md",
+      "file_path": "byok-description.md",
       "is_active": true,
       "is_public": true,
       "mime_type": "markdown"
     },
     "Python code example": {
-      "$doc_preset": "llm_code_example_requests"
+      "$doc_preset": "api_code_example_requests"
+    },
+    "Shell code example": {
+      "$doc_preset": "api_code_example_shell"
     }
   },
   "list_price": {
