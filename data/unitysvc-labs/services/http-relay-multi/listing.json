@@ -28,8 +28,8 @@
   "schema": "listing_v1",
   "service_options": {
     "ops_testing_parameters": {
-      "base_url_secret": "HTTP_RELAY_BASE_URL",
-      "api_key_secret": "HTTP_RELAY_API_KEY"
+      "api_key_secret": "HTTP_RELAY_API_KEY",
+      "base_url_secret": "HTTP_RELAY_BASE_URL"
     }
   },
   "status": "ready",
@@ -41,20 +41,20 @@
     }
   },
   "user_parameters_schema": {
-    "type": "object",
     "properties": {
-      "base_url_secret": {
-        "type": "string",
-        "description": "Name of the customer secret containing the upstream base URL"
-      },
       "api_key_secret": {
-        "type": "string",
         "default": "",
-        "description": "Name of the customer secret containing the API key (leave empty if no auth)"
+        "description": "Name of the customer secret containing the API key (leave empty if no auth)",
+        "type": "string"
+      },
+      "base_url_secret": {
+        "description": "Name of the customer secret containing the upstream base URL",
+        "type": "string"
       }
     },
     "required": [
       "base_url_secret"
-    ]
+    ],
+    "type": "object"
   }
 }
