@@ -14,7 +14,10 @@
       "mime_type": "markdown"
     },
     "Python code example": {
-      "$doc_preset": "llm_code_example_requests"
+      "$doc_preset": "api_code_example_requests"
+    },
+    "Shell code example": {
+      "$doc_preset": "api_code_example_shell"
     }
   },
   "list_price": {
