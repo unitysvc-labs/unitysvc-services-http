@@ -25,6 +25,7 @@
     "price": "0.001",
     "type": "constant"
   },
+  "name": "http-relay-multi",
   "schema": "listing_v1",
   "service_options": {
     "enrollment_vars": {
