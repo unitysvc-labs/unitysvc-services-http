@@ -3,7 +3,7 @@
     "http_relay"
   ],
   "description": "Multi-enrollment HTTP relay. Each enrollment connects to a different upstream HTTP endpoint. Customers provide secret names as parameters, enabling multiple relay configurations under a single account.",
-  "name": "http-relay-multi",
+  "name": "http-relay-plus",
   "payout_price": {
     "description": "No platform commission \u2014 customer uses own endpoint",
     "percentage": "100.00",
