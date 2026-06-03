@@ -21,7 +21,7 @@
     }
   },
   "list_price": {
-    "description": "$0.0001 per request relayed",
+    "description": "$1 for every 10,000 requests \u2014 pay only for what you relay",
     "price": "0.0001",
     "type": "constant"
   },
