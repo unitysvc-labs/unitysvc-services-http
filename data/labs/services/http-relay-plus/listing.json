@@ -25,7 +25,7 @@
     "price": "0.0001",
     "type": "constant"
   },
-  "name": "http-relay-plus",
+  "name": "labs/http-relay-plus",
   "schema": "listing_v1",
   "service_options": {
     "enrollment_vars": {
