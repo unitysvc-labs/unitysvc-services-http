@@ -27,6 +27,15 @@ sequenceDiagram
 
 3. **Send requests** through the UnitySVC HTTP gateway using your svcpass API key
 
+### svcpass handling
+
+Your svcpass key authenticates you to the gateway and is **never forwarded to your upstream**. What the gateway sends upstream depends on whether you set `HTTP_RELAY_API_KEY`:
+
+- **No `HTTP_RELAY_API_KEY`** (unset/empty) — the gateway **strips** svcpass and forwards no auth. Use this for public or unauthenticated upstreams.
+- **`HTTP_RELAY_API_KEY` set** — the gateway **overrides** svcpass with your key on the same header your client used (`Authorization` → `Bearer <key>`, otherwise the raw header value).
+
+A non-svcpass token you send on a *different* accepted header (`Authorization`, `x-api-key`, or `x-goog-api-key`) passes through to your upstream untouched, so your own provider credential and svcpass can co-exist.
+
 ### Usage
 
 Configure your HTTP client with:
