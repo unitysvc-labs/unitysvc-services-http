@@ -33,7 +33,7 @@
     },
     "ops_testing_parameters": {
       "api_key_secret": "HTTP_RELAY_API_KEY",
-      "base_url_secret": "HTTP_RELAY_BASE_URL"
+      "base_url": "https://echo.unitysvc.dev"
     }
   },
   "status": "ready",
@@ -51,13 +51,14 @@
         "description": "Name of the customer secret containing the API key (leave empty if no auth)",
         "type": "string"
       },
-      "base_url_secret": {
-        "description": "Name of the customer secret containing the upstream base URL",
+      "base_url": {
+        "default": "https://echo.unitysvc.dev",
+        "description": "Upstream base URL, specified directly (e.g. https://api.example.com)",
         "type": "string"
       }
     },
     "required": [
-      "base_url_secret"
+      "base_url"
     ],
     "type": "object"
   }
