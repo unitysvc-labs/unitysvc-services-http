@@ -21,11 +21,11 @@
     }
   },
   "list_price": {
-    "description": "$0.001 per request relayed",
-    "price": "0.001",
+    "description": "$1 for every 10,000 requests \u2014 pay only for what you relay",
+    "price": "0.0001",
     "type": "constant"
   },
-  "name": "http-relay-multi",
+  "name": "labs/http-relay-plus",
   "schema": "listing_v1",
   "service_options": {
     "enrollment_vars": {
