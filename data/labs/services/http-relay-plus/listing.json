@@ -47,8 +47,8 @@
   "user_parameters_schema": {
     "properties": {
       "api_key_secret": {
-        "default": "",
-        "description": "Name of the customer secret containing the API key (leave empty if no auth)",
+        "default": "HTTP_RELAY_API_KEY",
+        "description": "Name of the customer secret containing the API key. Defaults to HTTP_RELAY_API_KEY (the name the non-plus `http-relay` uses) so that empty-params enrollments share the seller-seeded testing secret. Override to a per-enrollment name to bind a different key.",
         "type": "string"
       },
       "base_url": {
