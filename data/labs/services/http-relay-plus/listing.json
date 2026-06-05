@@ -28,9 +28,6 @@
   "name": "labs/http-relay-plus",
   "schema": "listing_v1",
   "service_options": {
-    "enrollment_vars": {
-      "code": "{{ enrollment_code(6) }}"
-    },
     "ops_testing_parameters": {
       "api_key_secret": "HTTP_RELAY_API_KEY",
       "base_url": "https://echo.unitysvc.dev"
@@ -41,7 +38,7 @@
   "user_access_interfaces": {
     "http_gateway": {
       "access_method": "http",
-      "base_url": "${API_GATEWAY_BASE_URL}/{{ enrollment_vars.code }}"
+      "base_url": "${API_GATEWAY_BASE_URL}/{{ enrollment.code }}"
     }
   },
   "user_parameters_schema": {
