@@ -26,7 +26,6 @@
     "type": "constant"
   },
   "name": "labs/http-relay-plus",
-  "schema": "listing_v1",
   "service_options": {
     "ops_testing_parameters": {
       "api_key_secret": "HTTP_RELAY_API_KEY",
