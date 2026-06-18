@@ -2,7 +2,7 @@
   "capabilities": [
     "http_relay"
   ],
-  "description": "Bring Your Own Endpoint HTTP relay. Connect your own upstream HTTP API and route requests through the UnitySVC gateway. Customers provide their own endpoint URL and optional API key.",
+  "description": "HTTP relay through the UnitySVC gateway \u2014 route requests to your own upstream HTTP endpoint. The free `http_relay` channel relays to a single endpoint you store as secrets; the metered `plus` channel lets you run many relays under one account, each enrollment binding its own endpoint via parameters.",
   "name": "http-relay",
   "payout_price": {
     "description": "No platform commission \u2014 customer uses own endpoint",
@@ -13,6 +13,7 @@
   "status": "ready",
   "tags": [
     "byoe",
+    "enrollment",
     "gateway"
   ],
   "time_created": "2026-04-07T00:00:00Z",
@@ -21,6 +22,11 @@
       "access_method": "http",
       "api_key": "${ customer_secrets.HTTP_RELAY_API_KEY ?? }",
       "base_url": "${ customer_secrets.HTTP_RELAY_BASE_URL }"
+    },
+    "plus": {
+      "access_method": "http",
+      "api_key": "${ customer_secrets.{{ params.api_key_secret }} ?? }",
+      "base_url": "{{ params.base_url }}"
     }
   }
 }
