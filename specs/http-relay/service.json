@@ -1,3 +1,7 @@
 {
-  "service_id": "ef9f893f-cdd3-47f1-81f6-da44ffff53d9"
+  "display_name": "HTTP Relay",
+  "name": "http-relay",
+  "service_id": "198eaef8-d924-4df2-801c-f3fb7c0bc9f5",
+  "status": "created",
+  "time_created": "2026-06-18T21:29:28.106426Z"
 }
