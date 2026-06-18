@@ -1,13 +1,13 @@
 {
   "currency": "USD",
-  "display_name": "HTTP Relay (Bring Your Own Endpoint)",
+  "display_name": "HTTP Relay",
   "documents": {
     "Connectivity test": {
       "$doc_preset": "api_connectivity"
     },
     "How to use this service": {
       "category": "getting_started",
-      "description": "Guide to configuring your own HTTP endpoint for relay",
+      "description": "How HTTP Relay works and the two ways to use it \u2014 a stored endpoint (free) or per-enrollment endpoints (metered)",
       "file_path": "byok-description.md",
       "is_active": true,
       "is_public": true,
@@ -21,17 +21,56 @@
     }
   },
   "list_price": {
-    "description": "Free \u2014 customer provides own endpoint",
-    "price": "0",
-    "type": "constant"
+    "channels": {
+      "http_relay": {
+        "description": "Free \u2014 you relay to your own stored endpoint",
+        "price": "0",
+        "type": "constant"
+      },
+      "plus": {
+        "description": "$1 for every 10,000 requests \u2014 pay only for what you relay",
+        "price": "0.0001",
+        "type": "constant"
+      }
+    },
+    "default": "http_relay",
+    "type": "channel"
   },
   "name": "http-relay",
+  "service_options": {
+    "ops_testing_parameters": {
+      "api_key_secret": "HTTP_RELAY_API_KEY",
+      "base_url": "https://echo.unitysvc.dev"
+    }
+  },
   "status": "ready",
   "time_created": "2026-04-07T00:00:00Z",
   "user_access_interfaces": {
+    "enrollment": {
+      "access_method": "http",
+      "base_url": "${API_GATEWAY_BASE_URL}/{{ enrollment.code }}"
+    },
     "http_gateway": {
       "access_method": "http",
       "base_url": "${API_GATEWAY_BASE_URL}/{{ service_name }}"
     }
+  },
+  "user_parameters_schema": {
+    "properties": {
+      "api_key_secret": {
+        "default": "HTTP_RELAY_API_KEY",
+        "description": "Name of the customer secret holding the API key. Defaults to HTTP_RELAY_API_KEY (shared with the free http_relay channel) so empty-params enrollments reuse the seeded testing secret. Override per enrollment to bind a different key.",
+        "type": "string"
+      },
+      "base_url": {
+        "default": "https://echo.unitysvc.dev",
+        "description": "Upstream base URL for this enrollment, specified directly (e.g. https://api.example.com)",
+        "type": "string"
+      }
+    },
+    "required": [
+      "base_url"
+    ],
+    "type": "object"
   }
 }
