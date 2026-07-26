@@ -1,6 +1,6 @@
 {
   "currency": "USD",
-  "display_name": "HTTP Relay",
+  "display_name": "HTTP Relay \u2014 Bring Your Own Endpoint",
   "documents": {
     "Connectivity test": {
       "$doc_preset": "api_connectivity"
