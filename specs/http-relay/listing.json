@@ -22,7 +22,7 @@
   },
   "list_price": {
     "channels": {
-      "http_relay": {
+      "byok": {
         "description": "Free \u2014 you relay to your own stored endpoint",
         "price": "0",
         "type": "constant"
@@ -33,7 +33,7 @@
         "type": "constant"
       }
     },
-    "default": "http_relay",
+    "default": "byok",
     "type": "channel"
   },
   "name": "http-relay",
@@ -59,7 +59,7 @@
     "properties": {
       "api_key_secret": {
         "default": "HTTP_RELAY_API_KEY",
-        "description": "Name of the customer secret holding the API key. Defaults to HTTP_RELAY_API_KEY (shared with the free http_relay channel) so empty-params enrollments reuse the seeded testing secret. Override per enrollment to bind a different key.",
+        "description": "Name of the customer secret holding the API key. Defaults to HTTP_RELAY_API_KEY (shared with the free byok channel) so empty-params enrollments reuse the seeded testing secret. Override per enrollment to bind a different key.",
         "type": "string"
       },
       "base_url": {

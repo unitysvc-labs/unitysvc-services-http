@@ -24,7 +24,7 @@ The only thing that changes between the two usage methods below is **where the g
 
 This service exposes two **upstream access channels**. Pick whichever fits — you can use both.
 
-| | `http_relay` — stored endpoint | `plus` — per-enrollment endpoints |
+| | `byok` — stored endpoint | `plus` — per-enrollment endpoints |
 |---|---|---|
 | Best for | one fixed upstream | many upstreams under one account |
 | Endpoint | `HTTP_RELAY_BASE_URL` customer secret | a `base_url` parameter per enrollment |
@@ -32,7 +32,7 @@ This service exposes two **upstream access channels**. Pick whichever fits — y
 | Reached at | the canonical gateway URL | a unique `/e/<code>` URL per enrollment |
 | Price | **free** | **$0.0001 / request** |
 
-#### Method 1 — Stored endpoint (`http_relay`, free)
+#### Method 1 — Stored endpoint (`byok`, free)
 
 One upstream, configured once via customer secrets.
 
