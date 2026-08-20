@@ -8,6 +8,7 @@
       "any"
     ]
   },
+  "logo": "https://raw.githubusercontent.com/microsoft/fluentui-system-icons/main/assets/Link/SVG/ic_fluent_link_32_color.svg",
   "name": "http-relay",
   "payout_price": {
     "description": "No platform commission \u2014 customer uses own endpoint",
