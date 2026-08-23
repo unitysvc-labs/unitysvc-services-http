@@ -1,6 +1,6 @@
 {
   "capabilities": [
-    "http_relay"
+    "http-relay"
   ],
   "description": "Use it when you already operate an HTTP API and want UnitySVC to handle svcpass authentication, routing, enrollment-specific configuration, and request metering at the edge. The gateway preserves the incoming method, path, query, headers, and body, injects the configured upstream credential, forwards the call to your `base_url`, and streams the upstream response back to the caller without storing the payload.\n\nUse the free `byok` channel to relay every call to one endpoint stored in customer secrets (`HTTP_RELAY_BASE_URL`, optional `HTTP_RELAY_API_KEY`). Use the metered `plus` channel for many per-enrollment endpoints under one account; each enrollment binds its own `base_url` and optional API-key secret, is reached at a unique `/e/<code>` URL, and is billed at $1 per 10,000 requests. See \u201cHow to use this service\u201d for setup and code examples.",
   "details": {
