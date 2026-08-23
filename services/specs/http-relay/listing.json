@@ -23,12 +23,12 @@
   "list_price": {
     "channels": {
       "byok": {
-        "description": "Free — you relay to your own stored endpoint",
+        "description": "Free | you relay to your own stored endpoint",
         "price": "0",
         "type": "constant"
       },
       "plus": {
-        "description": "$1 for every 10,000 requests — pay only for what you relay",
+        "description": "$1 per 10,000 requests | pay only for what you relay",
         "price": "0.0001",
         "type": "constant"
       }
