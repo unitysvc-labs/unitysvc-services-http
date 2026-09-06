@@ -1,0 +1,38 @@
+#!/bin/bash
+# Deep connectivity test for http-to-sink: not just "did the gateway answer
+# 2xx" (which a broken relay can return even when the request never reaches
+# sink) but "did the request actually arrive" — POST a body carrying a unique
+# marker through the service, then poll the sink's own /retrieve API to
+# confirm it recorded that exact marker.
+set -o pipefail
+
+SINK="https://sink.unitysvc.dev"
+MARKER="http-to-sink-$(date +%s)-${RANDOM}"
+URL="{{ service_base_url }}"
+
+if [ -n "${UNITYSVC_API_KEY:-}" ]; then
+    AUTH_HEADER="Authorization: Bearer ${UNITYSVC_API_KEY}"
+else
+    AUTH_HEADER="X-No-Auth: 1"
+fi
+
+status=$(curl -sS --max-time 10 \
+    -H "$AUTH_HEADER" -H 'Content-Type: application/json' \
+    -o /dev/null -w '%{http_code}' \
+    -X POST "$URL" \
+    --data "{\"marker\":\"${MARKER}\"}" 2>/dev/null || echo 000)
+
+case "$status" in
+  2??|3??) ;;
+  *)
+    echo "connectivity failed: HTTP $status posting to $URL" >&2
+    exit 1
+    ;;
+esac
+
+if curl -sS "${SINK}/retrieve?search=${MARKER}&wait=30" | grep -q "${MARKER}"; then
+    echo "connectivity ok — sink recorded the forwarded request (${MARKER})"
+    exit 0
+fi
+echo "connectivity failed: request accepted (HTTP $status) but ${MARKER} never reached ${SINK}" >&2
+exit 1
