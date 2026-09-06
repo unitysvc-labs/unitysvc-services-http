@@ -1,0 +1,30 @@
+{
+  "capabilities": [
+    "http-relay"
+  ],
+  "description": "Pure HTTP passthrough, fixed at the offering level to the platform's sink test receiver (no customer_secrets, no enrollment). Exists purely as gateway-reachable infrastructure for the post-deploy smoke test (unitysvc-k8s gateway-smoke workflow): it gives any caller that needs to prove it can reach the API gateway a stable, always-on route whose upstream is the sink test receiver, verifiable by polling sink's own `/retrieve` API. Not intended for real relay use — the destination is always the same shared test sink.",
+  "details": {
+    "input_formats": [
+      "any"
+    ]
+  },
+  "logo": "https://raw.githubusercontent.com/microsoft/fluentui-system-icons/main/assets/Link/SVG/ic_fluent_link_32_color.svg",
+  "name": "http-to-sink",
+  "payout_price": {
+    "description": "Free — internal smoke-test infrastructure",
+    "percentage": "0.00",
+    "type": "revenue_share"
+  },
+  "service_type": "proxy",
+  "status": "ready",
+  "summary": "Gateway smoke-test only: fixed HTTP passthrough to the platform's sink test receiver.",
+  "time_created": "2026-09-06T00:00:00Z",
+  "upstream_access_config": {
+    "default": {
+      "access_method": "http",
+      "base_url": "https://sink.unitysvc.dev",
+      "is_active": true,
+      "is_primary": true
+    }
+  }
+}
