@@ -1,0 +1,29 @@
+#!/bin/bash
+# Connectivity test for http-to-smtp — the gateway-native notify://smtp
+# primitive. There is NO seller upstream: the gateway terminates the request,
+# the backend reconstructs a MIME message and queues it for SMTP delivery.
+#
+#   local_testing : there is no server to reach — the response is produced by
+#                   the gateway itself (cf. the notify:// and resp:// services).
+#                   This branch only confirms wiring.
+#   gateway       : POST the compact msg envelope through the gateway and
+#                   expect 2xx (202 Accepted — queued for delivery).
+set -o pipefail
+
+{% if local_testing %}
+echo "connectivity ok (gateway-native notify://smtp, no upstream)"
+{% else %}
+status=$(curl -sS --max-time 10 \
+    -X POST \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer ${UNITYSVC_API_KEY}" \
+    -d '{"title":"http-to-smtp connectivity","body":"connectivity probe","type":"info","format":"text"}' \
+    -o /dev/null -w "%{http_code}" \
+    "{{ service_base_url }}" 2>/dev/null)
+
+case "$status" in
+  2??) echo "connectivity ok (HTTP $status — queued for SMTP delivery)"; exit 0 ;;
+  000) echo "connectivity failed: could not connect to {{ service_base_url }}" >&2; exit 1 ;;
+  *)   echo "connectivity failed: HTTP $status from {{ service_base_url }}" >&2; exit 1 ;;
+esac
+{% endif %}

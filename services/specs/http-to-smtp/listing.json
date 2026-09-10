@@ -1,0 +1,123 @@
+{
+  "currency": "USD",
+  "display_name": "HTTP-to-SMTP — Bring Your Own SMTP Server",
+  "documents": {
+    "Connectivity test": {
+      "category": "connectivity_test",
+      "description": "POST a msg envelope through the gateway and expect 2xx (queued for SMTP delivery)",
+      "file_path": "connectivity.sh.j2",
+      "is_active": true,
+      "is_public": true,
+      "meta": {
+        "output_contains": "connectivity ok"
+      },
+      "mime_type": "bash"
+    },
+    "How to use this service": {
+      "category": "getting_started",
+      "description": "How HTTP-to-SMTP works, the two channels, the accepted payload shapes, and the secrets each needs",
+      "file_path": "description.md",
+      "is_active": true,
+      "is_public": true,
+      "mime_type": "markdown"
+    },
+    "Python code example": {
+      "category": "code_example",
+      "description": "Python (httpx) example — send a faithful email payload with an attachment",
+      "file_path": "code-example.py.j2",
+      "is_active": true,
+      "is_public": true,
+      "meta": {
+        "output_contains": "sent",
+        "requirements": [
+          "httpx"
+        ]
+      },
+      "mime_type": "python"
+    }
+  },
+  "list_price": {
+    "channels": {
+      "byok": {
+        "description": "Free | you deliver through your own stored SMTP server",
+        "price": "0",
+        "type": "constant"
+      },
+      "plus": {
+        "description": "$1 per 1,000 messages | 1,000 messages per dollar",
+        "price": "0.001",
+        "type": "constant"
+      }
+    },
+    "default": "byok",
+    "description": "Free to $1 per 1,000 messages",
+    "price": "0.001",
+    "type": "channel"
+  },
+  "name": "http-to-smtp",
+  "service_options": {
+    "ops_testing_parameters": {
+      "from": "http-to-smtp@mailpit.unitysvc.dev",
+      "host": "mailpit.unitysvc.dev",
+      "password_secret": "HTTP_TO_SMTP_PASSWORD",
+      "port": 1025,
+      "tls": "none",
+      "to": "ops-test@mailpit.unitysvc.dev",
+      "username_secret": "HTTP_TO_SMTP_USERNAME"
+    }
+  },
+  "status": "ready",
+  "time_created": "2026-09-09T00:00:00Z",
+  "user_access_interfaces": {
+    "canonical": {
+      "access_method": "http",
+      "base_url": "${API_GATEWAY_BASE_URL}/{{ service_name }}"
+    }
+  },
+  "user_parameters_schema": {
+    "properties": {
+      "from": {
+        "default": "http-to-smtp@mailpit.unitysvc.dev",
+        "description": "Envelope sender for this enrollment. Used as the MIME `From` when the posted payload carries no `from` of its own. Most SMTP servers require this to be an address they are willing to send as.",
+        "type": "string"
+      },
+      "host": {
+        "default": "mailpit.unitysvc.dev",
+        "description": "SMTP host for this enrollment (e.g. smtp.gmail.com, smtp.sendgrid.net, email-smtp.us-east-1.amazonaws.com). Defaults to the platform's mailpit testing sink.",
+        "type": "string"
+      },
+      "password_secret": {
+        "default": "HTTP_TO_SMTP_PASSWORD",
+        "description": "Name of the customer secret holding the SMTP password. Defaults to HTTP_TO_SMTP_PASSWORD (shared with the free byok channel) so an empty-params enrollment works out of the box.",
+        "type": "string"
+      },
+      "port": {
+        "default": 1025,
+        "description": "SMTP port. 1025 for the mailpit testing sink, 587 for STARTTLS, 465 for implicit TLS.",
+        "type": "integer"
+      },
+      "tls": {
+        "default": "none",
+        "description": "Transport security for the SMTP connection: `starttls` (upgrade on port 587), `ssl` (implicit TLS on port 465), or `none` (plaintext — testing sinks and trusted internal relays only).",
+        "enum": [
+          "starttls",
+          "ssl",
+          "none"
+        ],
+        "type": "string"
+      },
+      "to": {
+        "default": "ops-test@mailpit.unitysvc.dev",
+        "description": "Default recipient for this enrollment. Used when the posted payload carries no `to` of its own.",
+        "type": "string"
+      },
+      "username_secret": {
+        "default": "HTTP_TO_SMTP_USERNAME",
+        "description": "Name of the customer secret holding the SMTP username. Defaults to HTTP_TO_SMTP_USERNAME. Leave the secret empty for unauthenticated sinks.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

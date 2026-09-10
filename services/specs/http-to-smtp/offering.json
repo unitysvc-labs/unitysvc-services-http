@@ -1,0 +1,54 @@
+{
+  "capabilities": [
+    "http-to-smtp"
+  ],
+  "description": "`http-to-smtp` is the inverse of `smtp-to-http`: POST a message to the UnitySVC API Gateway and it is delivered as a real email through an SMTP server you control.\n\nThe gateway terminates the request on the platform-native `notify://smtp` upstream — there is no seller endpoint to call. It accepts either the compact `{title, body, type, format}` `msg` envelope or the faithful `email` payload the SMTP-to-HTTP converter emits (sender, recipients, subject, text and html bodies, threading headers, base64 attachments), reconstructs a MIME message from it, and submits that message to your SMTP server. Because delivery is queued, a 2xx means accepted for delivery, not delivered — the same contract the SMTP gateway's own `250` carries.\n\nUse the free `byok` channel to send through one SMTP server stored in customer secrets (`HTTP_TO_SMTP_HOST`, `HTTP_TO_SMTP_PORT`, `HTTP_TO_SMTP_TLS`, `HTTP_TO_SMTP_USERNAME`, `HTTP_TO_SMTP_PASSWORD`, `HTTP_TO_SMTP_FROM`, `HTTP_TO_SMTP_TO`). Use the metered `plus` channel to run many SMTP destinations under one account: each enrollment binds its own host, port, TLS mode, sender and recipient, names the secrets holding its credentials, is reached at a unique `/e/<code>` URL, and is billed at $1 per 1,000 messages. To send through the UnitySVC SMTP gateway rather than your own server, use the http-to-smtp-gateway service instead. See “How to use this service” for setup and examples.",
+  "details": {
+    "input_formats": [
+      "msg",
+      "x-email-envelope"
+    ]
+  },
+  "logo": "https://raw.githubusercontent.com/microsoft/fluentui-system-icons/main/assets/Mail%20Arrow%20Forward/SVG/ic_fluent_mail_arrow_forward_32_color.svg",
+  "name": "http-to-smtp",
+  "payout_price": {
+    "description": "No platform commission — customer uses own SMTP server",
+    "percentage": "100.00",
+    "type": "revenue_share"
+  },
+  "service_type": "notification",
+  "status": "ready",
+  "summary": "POST a message envelope or a faithful email payload and UnitySVC delivers it as a real email through an SMTP server you control.",
+  "time_created": "2026-09-09T00:00:00Z",
+  "upstream_access_config": {
+    "byok": {
+      "access_method": "http",
+      "auth_mode": "static",
+      "base_url": "notify://smtp",
+      "is_active": true,
+      "is_primary": true,
+      "mail_from": "${ customer_secrets.HTTP_TO_SMTP_FROM ?? }",
+      "mail_to": "${ customer_secrets.HTTP_TO_SMTP_TO ?? }",
+      "smtp_host": "${ customer_secrets.HTTP_TO_SMTP_HOST }",
+      "smtp_password": "${ customer_secrets.HTTP_TO_SMTP_PASSWORD ?? }",
+      "smtp_port": "${ customer_secrets.HTTP_TO_SMTP_PORT ?? 587 }",
+      "smtp_tls": "${ customer_secrets.HTTP_TO_SMTP_TLS ?? starttls }",
+      "smtp_username": "${ customer_secrets.HTTP_TO_SMTP_USERNAME ?? }",
+      "sort_order": 1
+    },
+    "plus": {
+      "access_method": "http",
+      "auth_mode": "static",
+      "base_url": "notify://smtp",
+      "is_active": true,
+      "mail_from": "{{ params.from }}",
+      "mail_to": "{{ params.to }}",
+      "smtp_host": "{{ params.host }}",
+      "smtp_password": "${ customer_secrets.{{ params.password_secret }} ?? }",
+      "smtp_port": "{{ params.port }}",
+      "smtp_tls": "{{ params.tls }}",
+      "smtp_username": "${ customer_secrets.{{ params.username_secret }} ?? }",
+      "sort_order": 2
+    }
+  }
+}
