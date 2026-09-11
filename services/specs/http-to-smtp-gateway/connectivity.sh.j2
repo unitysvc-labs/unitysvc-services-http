@@ -13,17 +13,24 @@ set -o pipefail
 {% if local_testing %}
 echo "connectivity ok (gateway-native notify://smtp, no upstream)"
 {% else %}
+# Capture the body as well as the status: a 4xx/5xx from this service carries a
+# specific reason (no recipient, no sender, unknown shape, loop guard), and
+# discarding it turns every failure into an opaque status code.
+body=$(mktemp)
 status=$(curl -sS --max-time 10 \
     -X POST \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer ${UNITYSVC_API_KEY}" \
     -d '{"title":"http-to-smtp-gateway connectivity","body":"connectivity probe","type":"info","format":"text"}' \
-    -o /dev/null -w "%{http_code}" \
+    -o "$body" -w "%{http_code}" \
     "{{ service_base_url }}" 2>/dev/null)
 
 case "$status" in
-  2??) echo "connectivity ok (HTTP $status — queued for the SMTP Gateway)"; exit 0 ;;
-  000) echo "connectivity failed: could not connect to {{ service_base_url }}" >&2; exit 1 ;;
-  *)   echo "connectivity failed: HTTP $status from {{ service_base_url }}" >&2; exit 1 ;;
+  2??) echo "connectivity ok (HTTP $status — queued for the SMTP Gateway)"; rm -f "$body"; exit 0 ;;
+  000) echo "connectivity failed: could not connect to {{ service_base_url }}" >&2 ;;
+  *)   echo "connectivity failed: HTTP $status from {{ service_base_url }}" >&2
+       echo "response: $(head -c 500 "$body")" >&2 ;;
 esac
+rm -f "$body"
+exit 1
 {% endif %}
