@@ -9,7 +9,7 @@
       "x-email-envelope"
     ]
   },
-  "logo": "https://raw.githubusercontent.com/microsoft/fluentui-system-icons/main/assets/Mail%20Arrow%20Forward/SVG/ic_fluent_mail_arrow_forward_32_color.svg",
+  "logo": "https://raw.githubusercontent.com/microsoft/fluentui-system-icons/main/assets/Send/SVG/ic_fluent_send_32_color.svg",
   "name": "http-to-smtp",
   "payout_price": {
     "description": "No platform commission — customer uses own SMTP server",

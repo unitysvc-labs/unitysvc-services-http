@@ -1,5 +1,5 @@
 {
-  "display_name": "HTTP-to-SMTP Gateway \u2014 Email Any UnitySVC SMTP Route",
+  "display_name": "HTTP-to-SMTP Gateway — Email Any UnitySVC SMTP Route",
   "name": "http-to-smtp-gateway",
   "service_id": "c08e2d61-afb1-4c75-95fc-d0f4a4d5f135",
   "status": "unchanged",
