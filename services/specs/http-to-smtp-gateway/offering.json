@@ -1,0 +1,46 @@
+{
+  "capabilities": [
+    "http-to-smtp"
+  ],
+  "description": "`http-to-smtp-gateway` is the HTTP door into the UnitySVC SMTP Gateway: POST a message to the API Gateway and it is delivered as email to any route on the SMTP Gateway — a service, an alias, a broadcast group, or an enrollment — as your own identity.\n\nThe API Gateway terminates the request on the platform-native `notify://smtp` upstream, reconstructs a MIME message from either the compact `{title, body, type, format}` `msg` envelope or the faithful `email` payload the SMTP-to-HTTP converter emits, and submits it to the platform's own SMTP Gateway with your UnitySVC API key replayed as the SMTP password and your chosen route as the SMTP username. The host is fixed to the platform, so the forwarded credential never leaves UnitySVC; you choose only the route. That makes everything already reachable over SMTP — BYOK relays, aliases, tee broadcasts, enrollment codes — reachable from an HTTP caller without re-entering SMTP credentials. Whatever the target route bills, it bills under its own listing; this hop is free on the default channel.\n\nUse the free `default` channel to send every message to one route stored as the `HTTP_TO_SMTP_GATEWAY_TARGET` customer secret (default `smtp-byok`), with fallback sender and recipient in `HTTP_TO_SMTP_GATEWAY_FROM` and `HTTP_TO_SMTP_GATEWAY_TO`. Use the metered `plus` channel to run many HTTP-to-SMTP bridges under one account: each enrollment binds its own target, sender and recipient, is reached at a unique `/e/<code>` URL, and is billed at $1 per 1,000 messages. To deliver through your own SMTP server instead of the platform's, use the http-to-smtp service. See “How to use this service” for setup and examples.",
+  "details": {
+    "input_formats": [
+      "msg",
+      "x-email-envelope"
+    ]
+  },
+  "logo": "https://raw.githubusercontent.com/microsoft/fluentui-system-icons/main/assets/Mail%20Multiple/SVG/ic_fluent_mail_multiple_32_color.svg",
+  "name": "http-to-smtp-gateway",
+  "payout_price": {
+    "description": "No platform commission — forwards into the customer's own SMTP Gateway route",
+    "percentage": "100.00",
+    "type": "revenue_share"
+  },
+  "service_type": "proxy",
+  "status": "ready",
+  "summary": "HTTP in, UnitySVC SMTP Gateway out: post a message and it is delivered as email to any SMTP Gateway route you choose, as you.",
+  "time_created": "2026-09-09T00:00:00Z",
+  "upstream_access_config": {
+    "default": {
+      "access_method": "http",
+      "auth_mode": "forward",
+      "base_url": "notify://smtp",
+      "is_active": true,
+      "is_primary": true,
+      "mail_from": "${ customer_secrets.HTTP_TO_SMTP_GATEWAY_FROM ?? }",
+      "mail_to": "${ customer_secrets.HTTP_TO_SMTP_GATEWAY_TO ?? }",
+      "smtp_target": "${ customer_secrets.HTTP_TO_SMTP_GATEWAY_TARGET ?? smtp-byok }",
+      "sort_order": 1
+    },
+    "plus": {
+      "access_method": "http",
+      "auth_mode": "forward",
+      "base_url": "notify://smtp",
+      "is_active": true,
+      "mail_from": "{{ params.from }}",
+      "mail_to": "{{ params.to }}",
+      "smtp_target": "{{ params.target }}",
+      "sort_order": 2
+    }
+  }
+}

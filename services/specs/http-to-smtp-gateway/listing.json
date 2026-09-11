@@ -1,0 +1,95 @@
+{
+  "currency": "USD",
+  "display_name": "HTTP-to-SMTP Gateway — Email Any UnitySVC SMTP Route",
+  "documents": {
+    "Connectivity test": {
+      "category": "connectivity_test",
+      "description": "POST a msg envelope through the gateway and expect 2xx (queued for the SMTP Gateway)",
+      "file_path": "connectivity.sh.j2",
+      "is_active": true,
+      "is_public": true,
+      "meta": {
+        "output_contains": "connectivity ok"
+      },
+      "mime_type": "bash"
+    },
+    "How to use this service": {
+      "category": "getting_started",
+      "description": "How HTTP-to-SMTP Gateway works, which routes you can target, and what the forwarded credential means",
+      "file_path": "description.md",
+      "is_active": true,
+      "is_public": true,
+      "mime_type": "markdown"
+    },
+    "Python code example": {
+      "category": "code_example",
+      "description": "Python (httpx) example — post a faithful email payload to an SMTP Gateway route",
+      "file_path": "code-example.py.j2",
+      "is_active": true,
+      "is_public": true,
+      "meta": {
+        "output_contains": "sent",
+        "requirements": [
+          "httpx"
+        ]
+      },
+      "mime_type": "python"
+    }
+  },
+  "list_price": {
+    "channels": {
+      "default": {
+        "description": "Free | one SMTP Gateway route stored as a customer secret",
+        "price": "0",
+        "type": "constant"
+      },
+      "plus": {
+        "description": "$1 per 1,000 messages | 1,000 messages per dollar",
+        "price": "0.001",
+        "type": "constant"
+      }
+    },
+    "default": "default",
+    "description": "Free to $1 per 1,000 messages",
+    "price": "0.001",
+    "type": "channel"
+  },
+  "name": "http-to-smtp-gateway",
+  "service_options": {
+    "ops_testing_parameters": {
+      "from": "http-to-smtp-gateway@mailpit.unitysvc.dev",
+      "target": "smtp-byok",
+      "to": "ops-test@mailpit.unitysvc.dev"
+    }
+  },
+  "status": "ready",
+  "time_created": "2026-09-09T00:00:00Z",
+  "user_access_interfaces": {
+    "canonical": {
+      "access_method": "http",
+      "base_url": "${API_GATEWAY_BASE_URL}/{{ service_name }}"
+    }
+  },
+  "user_parameters_schema": {
+    "properties": {
+      "from": {
+        "default": "http-to-smtp-gateway@mailpit.unitysvc.dev",
+        "description": "Envelope sender for this enrollment. Used as the MIME `From` when the posted payload carries no `from` of its own.",
+        "type": "string"
+      },
+      "target": {
+        "default": "smtp-byok",
+        "description": "Route on the UnitySVC SMTP Gateway to deliver to, used as the SMTP username — a service route (`smtp-byok`, `smtp-to-mailbox`), an alias (`a/alerts`), a broadcast group (`b/relay`), or an enrollment code. No scheme, no leading slash.",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._@-]*(/[A-Za-z0-9][A-Za-z0-9._@-]*)*$",
+        "type": "string"
+      },
+      "to": {
+        "default": "ops-test@mailpit.unitysvc.dev",
+        "description": "Default recipient for this enrollment. Used when the posted payload carries no `to` of its own. Routes on the SMTP Gateway resolve on the username, not the recipient, but a recipient still travels with the message for any leg that really relays it.",
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  }
+}

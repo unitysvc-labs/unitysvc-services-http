@@ -1,0 +1,41 @@
+import base64
+import os
+import sys
+
+import httpx
+
+# Deliver a faithful email through your own SMTP server (http-to-smtp).
+# POST the `email` payload — the same shape the smtp-to-http converter emits —
+# and the gateway reconstructs a MIME message and submits it over SMTP.
+#   byok channel : SMTP server from your HTTP_TO_SMTP_* customer secrets (free)
+#   plus channel : per-enrollment SMTP server, reached at /e/<code> ($1/1,000)
+{% if local_testing %}
+# http-to-smtp is gateway-native (notify://smtp): there is no seller upstream
+# to call in local mode, so this branch only confirms wiring.
+print("sent (skipped: gateway-native notify://smtp, no upstream)")
+sys.exit(0)
+{% else %}
+attachment = base64.b64encode(b"timestamp,value\n2026-09-09T00:00:00Z,92\n").decode()
+
+response = httpx.post(
+    "{{ service_base_url }}",
+    headers={"Authorization": f"Bearer {k}"} if (k := os.environ.get("UNITYSVC_API_KEY")) else {},
+    json={
+        "from": "alerts@example.com",
+        "to": ["oncall@example.com"],
+        "subject": "Disk alert: clickhouse at 92%",
+        "text_body": "clickhouse disk 92% — see the attached sample.",
+        "html_body": "<p>clickhouse disk <b>92%</b> — see the attached sample.</p>",
+        "headers": {"In-Reply-To": "<incident-4711@example.com>"},
+        "attachments": [
+            {
+                "filename": "disk.csv",
+                "content_type": "text/csv",
+                "content_b64": attachment,
+            }
+        ],
+    },
+)
+response.raise_for_status()
+print(f"sent (HTTP {response.status_code})")
+{% endif %}
