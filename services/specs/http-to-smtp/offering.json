@@ -16,7 +16,7 @@
     "percentage": "100.00",
     "type": "revenue_share"
   },
-  "service_type": "notification",
+  "service_type": "proxy",
   "status": "ready",
   "summary": "POST a message envelope or a faithful email payload and UnitySVC delivers it as a real email through an SMTP server you control.",
   "time_created": "2026-09-09T00:00:00Z",
