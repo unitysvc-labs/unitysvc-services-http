@@ -3,5 +3,6 @@
   "name": "http-relay",
   "service_id": "198eaef8-d924-4df2-801c-f3fb7c0bc9f5",
   "status": "unchanged",
-  "time_created": "2026-08-19T05:44:17.440434Z"
+  "time_created": "2026-08-19T05:44:17.440434Z",
+  "upstream_test_status": "pass"
 }
