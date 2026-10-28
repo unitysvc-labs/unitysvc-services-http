@@ -51,13 +51,6 @@
     "type": "channel"
   },
   "name": "http-to-smtp-gateway",
-  "service_options": {
-    "ops_testing_parameters": {
-      "from": "http-to-smtp-gateway@mailpit.unitysvc.dev",
-      "target": "smtp-byok",
-      "to": "ops-test@mailpit.unitysvc.dev"
-    }
-  },
   "status": "ready",
   "time_created": "2026-09-09T00:00:00Z",
   "user_access_interfaces": {
@@ -65,27 +58,5 @@
       "access_method": "http",
       "base_url": "${API_GATEWAY_BASE_URL}/{{ service_name }}"
     }
-  },
-  "user_parameters_schema": {
-    "properties": {
-      "from": {
-        "default": "http-to-smtp-gateway@mailpit.unitysvc.dev",
-        "description": "Envelope sender for this enrollment. Used as the MIME `From` when the posted payload carries no `from` of its own.",
-        "type": "string"
-      },
-      "target": {
-        "default": "smtp-byok",
-        "description": "Route on the UnitySVC SMTP Gateway to deliver to, used as the SMTP username — a service route (`smtp-byok`, `smtp-to-mailbox`), an alias (`a/alerts`), a broadcast group (`b/relay`), or an enrollment code. No scheme, no leading slash.",
-        "pattern": "^[A-Za-z0-9][A-Za-z0-9._@-]*(/[A-Za-z0-9][A-Za-z0-9._@-]*)*$",
-        "type": "string"
-      },
-      "to": {
-        "default": "ops-test@mailpit.unitysvc.dev",
-        "description": "Default recipient for this enrollment. Used when the posted payload carries no `to` of its own. Routes on the SMTP Gateway resolve on the username, not the recipient, but a recipient still travels with the message for any leg that really relays it.",
-        "type": "string"
-      }
-    },
-    "required": [],
-    "type": "object"
   }
 }

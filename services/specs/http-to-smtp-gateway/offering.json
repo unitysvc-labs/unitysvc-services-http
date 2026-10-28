@@ -26,7 +26,6 @@
       "auth_mode": "forward",
       "base_url": "notify://smtp",
       "is_active": true,
-      "is_primary": true,
       "mail_from": "${ customer_secrets.HTTP_TO_SMTP_GATEWAY_FROM ?? }",
       "mail_to": "${ customer_secrets.HTTP_TO_SMTP_GATEWAY_TO ?? }",
       "smtp_target": "${ customer_secrets.HTTP_TO_SMTP_GATEWAY_TARGET ?? smtp-byok }",
@@ -39,6 +38,35 @@
       "is_active": true,
       "mail_from": "{{ params.from }}",
       "mail_to": "{{ params.to }}",
+      "params": {
+        "schema": {
+          "properties": {
+            "from": {
+              "default": "http-to-smtp-gateway@mailpit.unitysvc.dev",
+              "description": "Envelope sender for this enrollment. Used as the MIME `From` when the posted payload carries no `from` of its own.",
+              "type": "string"
+            },
+            "target": {
+              "default": "smtp-byok",
+              "description": "Route on the UnitySVC SMTP Gateway to deliver to, used as the SMTP username — a service route (`smtp-byok`, `smtp-to-mailbox`), an alias (`a/alerts`), a broadcast group (`b/relay`), or an enrollment code. No scheme, no leading slash.",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._@-]*(/[A-Za-z0-9][A-Za-z0-9._@-]*)*$",
+              "type": "string"
+            },
+            "to": {
+              "default": "ops-test@mailpit.unitysvc.dev",
+              "description": "Default recipient for this enrollment. Used when the posted payload carries no `to` of its own. Routes on the SMTP Gateway resolve on the username, not the recipient, but a recipient still travels with the message for any leg that really relays it.",
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "testing_defaults": {
+          "from": "http-to-smtp-gateway@mailpit.unitysvc.dev",
+          "target": "smtp-byok",
+          "to": "ops-test@mailpit.unitysvc.dev"
+        }
+      },
       "smtp_target": "{{ params.target }}",
       "sort_order": 2
     }
