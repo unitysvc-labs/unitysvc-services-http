@@ -23,8 +23,7 @@
     "default": {
       "access_method": "http",
       "base_url": "https://sink.unitysvc.dev",
-      "is_active": true,
-      "is_primary": true
+      "is_active": true
     }
   }
 }

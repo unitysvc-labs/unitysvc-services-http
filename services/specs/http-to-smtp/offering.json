@@ -26,7 +26,6 @@
       "auth_mode": "static",
       "base_url": "notify://smtp",
       "is_active": true,
-      "is_primary": true,
       "mail_from": "${ customer_secrets.HTTP_TO_SMTP_FROM ?? }",
       "mail_to": "${ customer_secrets.HTTP_TO_SMTP_TO ?? }",
       "smtp_host": "${ customer_secrets.HTTP_TO_SMTP_HOST }",
