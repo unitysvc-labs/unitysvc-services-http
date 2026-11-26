@@ -28,7 +28,7 @@ This service exposes two **upstream access channels**. Pick whichever fits — y
 |---|---|---|
 | Best for | one fixed upstream | many upstreams under one account |
 | Endpoint | `HTTP_RELAY_BASE_URL` customer secret | a `base_url` parameter per enrollment |
-| API key | `HTTP_RELAY_API_KEY` customer secret | the secret named by the `api_key_secret` parameter |
+| API key | `HTTP_RELAY_API_KEY` customer secret | the `api_key` parameter of the enrollment, kept as a secret |
 | Reached at | the canonical gateway URL | a unique `/e/<code>` URL per enrollment |
 | Price | **free** | **$0.0001 / request** |
 
@@ -49,27 +49,22 @@ Run **multiple** relays under one account — each enrollment routes to a differ
 - **Multi-tenant**: a different upstream per client or project
 - **Multiple providers**: separate enrollments for different third-party APIs
 
-Each enrollment routes to one upstream `base_url`, which you set **directly** as a parameter (e.g. `https://api.example.com`) — the base URL is not sensitive, and seeing it plainly makes enrollments easy to tell apart. The API key is supplied separately through `api_key_secret` (a customer-secret *name*), never inline.
+Each enrollment routes to one upstream `base_url`, which you set **directly** as a parameter (e.g. `https://api.example.com`) — the base URL is not sensitive, and seeing it plainly makes enrollments easy to tell apart. The API key is the `api_key` parameter: paste it when you enroll and the platform keeps it as a secret (it is not shown again), or pick one of your existing secrets to share a key across enrollments.
 
-1. **(Optional) Create a customer secret** for each upstream API key, using a naming convention:
+1. **Enroll once per endpoint**, providing the parameters:
 
-   ```
-   STAGING_API_KEY = sk-staging-xxxxx
-   PROD_API_KEY    = sk-prod-xxxxx
-   ```
-
-2. **Enroll once per endpoint**, providing the parameters:
-
-   | | `base_url` | `api_key_secret` |
+   | | `base_url` | `api_key` |
    |---|---|---|
-   | staging | `https://api.staging.example.com` | `STAGING_API_KEY` |
-   | production | `https://api.example.com` | `PROD_API_KEY` |
+   | staging | `https://api.staging.example.com` | the staging key, pasted |
+   | production | `https://api.example.com` | the production key, pasted |
 
-3. **Send requests** to each enrollment's unique `/e/<code>` gateway URL using your svcpass API key.
+   To change a key later, paste the new one in the enrollment. To rotate one key used by several enrollments in one place, create a customer secret and pick it for `api_key` in each.
+
+2. **Send requests** to each enrollment's unique `/e/<code>` gateway URL using your svcpass API key.
 
 ### svcpass handling — upstream API-key dispositions
 
-Your svcpass key authenticates you to the *gateway*. What the gateway sends to **your upstream** is controlled by the **value** of your upstream API-key secret — `HTTP_RELAY_API_KEY` for Method 1, or the secret named by `api_key_secret` for Method 2 (per-enrollment, so a dev enrollment can strip while a prod enrollment overrides). Four dispositions are recognized (see [unitysvc#1198](https://github.com/unitysvc/unitysvc/issues/1198)):
+Your svcpass key authenticates you to the *gateway*. What the gateway sends to **your upstream** is controlled by the **value** of your upstream API-key secret — `HTTP_RELAY_API_KEY` for Method 1, or the enrollment's `api_key` for Method 2 (per-enrollment, so a dev enrollment can strip while a prod enrollment overrides). Four dispositions are recognized (see [unitysvc#1198](https://github.com/unitysvc/unitysvc/issues/1198)):
 
 | Secret value | Behavior | When to use |
 |---|---|---|
