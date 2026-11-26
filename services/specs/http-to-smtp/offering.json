@@ -94,11 +94,11 @@
         "testing_defaults": {
           "from": "http-to-smtp@mailpit.unitysvc.dev",
           "host": "mailpit.unitysvc.dev",
-          "password": "${ customer_secrets.HTTP_TO_SMTP_PASSWORD }",
+          "password": "${ customer_secrets.HTTP_TO_SMTP_PASSWORD ?? }",
           "port": 1025,
           "tls": "none",
           "to": "ops-test@mailpit.unitysvc.dev",
-          "username": "${ customer_secrets.HTTP_TO_SMTP_USERNAME }"
+          "username": "${ customer_secrets.HTTP_TO_SMTP_USERNAME ?? }"
         }
       },
       "smtp_host": "{{ params.host }}",
