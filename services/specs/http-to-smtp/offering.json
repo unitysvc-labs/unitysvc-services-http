@@ -42,11 +42,70 @@
       "is_active": true,
       "mail_from": "{{ params.from }}",
       "mail_to": "{{ params.to }}",
+      "params": {
+        "schema": {
+          "properties": {
+            "from": {
+              "default": "http-to-smtp@mailpit.unitysvc.dev",
+              "description": "Envelope sender for this enrollment. Used as the MIME `From` when the posted payload carries no `from` of its own. Most SMTP servers require this to be an address they are willing to send as.",
+              "type": "string"
+            },
+            "host": {
+              "default": "mailpit.unitysvc.dev",
+              "description": "SMTP host for this enrollment (e.g. smtp.gmail.com, smtp.sendgrid.net, email-smtp.us-east-1.amazonaws.com). Defaults to the platform's mailpit testing sink.",
+              "type": "string"
+            },
+            "password": {
+              "default": "",
+              "description": "SMTP password. Paste it or pick one of your secrets; it is kept as a secret and not shown again. Leave empty for a server that needs no authentication.",
+              "format": "password",
+              "type": "string",
+              "writeOnly": true
+            },
+            "port": {
+              "default": 1025,
+              "description": "SMTP port. 1025 for the mailpit testing sink, 587 for STARTTLS, 465 for implicit TLS.",
+              "type": "integer"
+            },
+            "tls": {
+              "default": "none",
+              "description": "Transport security for the SMTP connection: `starttls` (upgrade on port 587), `ssl` (implicit TLS on port 465), or `none` (plaintext — testing sinks and trusted internal relays only).",
+              "enum": [
+                "starttls",
+                "ssl",
+                "none"
+              ],
+              "type": "string"
+            },
+            "to": {
+              "default": "ops-test@mailpit.unitysvc.dev",
+              "description": "Default recipient for this enrollment. Used when the posted payload carries no `to` of its own.",
+              "type": "string"
+            },
+            "username": {
+              "default": "",
+              "description": "SMTP username. Leave empty for a server that needs no authentication.",
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "testing_defaults": {
+          "from": "http-to-smtp@mailpit.unitysvc.dev",
+          "host": "mailpit.unitysvc.dev",
+          "password": "${ secrets.HTTP_TO_SMTP_PASSWORD }",
+          "port": 1025,
+          "tls": "none",
+          "to": "ops-test@mailpit.unitysvc.dev",
+          "username": "${ secrets.HTTP_TO_SMTP_USERNAME }"
+        }
+      },
       "smtp_host": "{{ params.host }}",
-      "smtp_password": "${ customer_secrets.{{ params.password_secret }} ?? }",
+      "smtp_password": "{{ params.password }}",
       "smtp_port": "{{ params.port }}",
       "smtp_tls": "{{ params.tls }}",
-      "smtp_username": "${ customer_secrets.{{ params.username_secret }} ?? }",
+      "smtp_username": "{{ params.username }}",
       "sort_order": 2
     }
   }

@@ -51,17 +51,6 @@
     "type": "channel"
   },
   "name": "http-to-smtp",
-  "service_options": {
-    "ops_testing_parameters": {
-      "from": "http-to-smtp@mailpit.unitysvc.dev",
-      "host": "mailpit.unitysvc.dev",
-      "password_secret": "HTTP_TO_SMTP_PASSWORD",
-      "port": 1025,
-      "tls": "none",
-      "to": "ops-test@mailpit.unitysvc.dev",
-      "username_secret": "HTTP_TO_SMTP_USERNAME"
-    }
-  },
   "status": "ready",
   "time_created": "2026-09-09T00:00:00Z",
   "user_access_interfaces": {
@@ -69,51 +58,5 @@
       "access_method": "http",
       "base_url": "${API_GATEWAY_BASE_URL}/{{ service_name }}"
     }
-  },
-  "user_parameters_schema": {
-    "properties": {
-      "from": {
-        "default": "http-to-smtp@mailpit.unitysvc.dev",
-        "description": "Envelope sender for this enrollment. Used as the MIME `From` when the posted payload carries no `from` of its own. Most SMTP servers require this to be an address they are willing to send as.",
-        "type": "string"
-      },
-      "host": {
-        "default": "mailpit.unitysvc.dev",
-        "description": "SMTP host for this enrollment (e.g. smtp.gmail.com, smtp.sendgrid.net, email-smtp.us-east-1.amazonaws.com). Defaults to the platform's mailpit testing sink.",
-        "type": "string"
-      },
-      "password_secret": {
-        "default": "HTTP_TO_SMTP_PASSWORD",
-        "description": "Name of the customer secret holding the SMTP password. Defaults to HTTP_TO_SMTP_PASSWORD (shared with the free byok channel) so an empty-params enrollment works out of the box.",
-        "type": "string"
-      },
-      "port": {
-        "default": 1025,
-        "description": "SMTP port. 1025 for the mailpit testing sink, 587 for STARTTLS, 465 for implicit TLS.",
-        "type": "integer"
-      },
-      "tls": {
-        "default": "none",
-        "description": "Transport security for the SMTP connection: `starttls` (upgrade on port 587), `ssl` (implicit TLS on port 465), or `none` (plaintext — testing sinks and trusted internal relays only).",
-        "enum": [
-          "starttls",
-          "ssl",
-          "none"
-        ],
-        "type": "string"
-      },
-      "to": {
-        "default": "ops-test@mailpit.unitysvc.dev",
-        "description": "Default recipient for this enrollment. Used when the posted payload carries no `to` of its own.",
-        "type": "string"
-      },
-      "username_secret": {
-        "default": "HTTP_TO_SMTP_USERNAME",
-        "description": "Name of the customer secret holding the SMTP username. Defaults to HTTP_TO_SMTP_USERNAME. Leave the secret empty for unauthenticated sinks.",
-        "type": "string"
-      }
-    },
-    "required": [],
-    "type": "object"
   }
 }

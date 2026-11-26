@@ -73,7 +73,7 @@ curl -X POST "$API_GATEWAY_BASE_URL/http-to-smtp" \
 ### `plus` — many SMTP servers, $1 per 1,000 messages
 
 Enroll once per destination. Each enrollment binds its own host, port, TLS mode,
-sender and recipient, and names the secrets holding its credentials:
+sender, recipient and credentials:
 
 | Parameter | Meaning | Default |
 |---|---|---|
@@ -82,10 +82,11 @@ sender and recipient, and names the secrets holding its credentials:
 | `tls` | `starttls`, `ssl`, or `none` | `none` |
 | `from` | fallback envelope sender | the mailpit test sender |
 | `to` | fallback recipient | the mailpit test recipient |
-| `username_secret` | **name** of the secret holding the username | `HTTP_TO_SMTP_USERNAME` |
-| `password_secret` | **name** of the secret holding the password | `HTTP_TO_SMTP_PASSWORD` |
+| `username` | SMTP username | empty (no authentication) |
+| `password` | SMTP password, kept as a secret | empty (no authentication) |
 
-Credentials are named, never inlined — the value stays in your secret store. Each
+Paste the password when you enroll: the platform keeps it as a secret and does not
+show it again. You can pick one of your existing secrets for it instead. Each
 enrollment is reached at its own `/e/<code>` URL:
 
 ```bash
